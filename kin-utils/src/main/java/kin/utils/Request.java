@@ -25,7 +25,7 @@ public class Request<T> {
     private Future<?> future;
     private ResultCallback<T> resultCallback;
 
-    Request(Callable<T> callable) {
+    public Request(Callable<T> callable) {
         checkNotNull(callable, "callable");
         this.callable = callable;
         this.mainHandler = new Handler(Looper.getMainLooper());
