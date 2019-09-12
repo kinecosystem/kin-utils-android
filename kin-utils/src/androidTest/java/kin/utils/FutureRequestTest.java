@@ -20,7 +20,7 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
-public class RequestTest {
+public class FutureRequestTest {
 
     private static final int TASK_DURATION_MILLIS = 100;
     private static final int TIMEOUT_DURATION_MILLIS = 500;
@@ -34,7 +34,7 @@ public class RequestTest {
                                 final Consumer<Exception> onErrorCallback)
         throws InterruptedException {
         final CountDownLatch latch = new CountDownLatch(1);
-        Request<T> mockRequest = new Request<>(new Callable<T>() {
+        Request<T> mockRequest = new FutureRequest<>(new Callable<T>() {
             @Override
             public T call() throws Exception {
                 T result = task.call();
@@ -139,7 +139,7 @@ public class RequestTest {
         final CountDownLatch runLatch = new CountDownLatch(1);
         final AtomicBoolean threadInterrupted = new AtomicBoolean(false);
         final AtomicBoolean callbackExecuted = new AtomicBoolean(false);
-        Request<Object> mockRequest = new Request<>(new Callable<Object>() {
+        Request<Object> mockRequest = new FutureRequest<>(new Callable<Object>() {
             @Override
             public Object call() throws Exception {
                 try {
@@ -172,12 +172,12 @@ public class RequestTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void request_nullCallable() {
-        new Request<>(null);
+        new FutureRequest<>(null);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void run_nullCallback() {
-        Request<String> request = new Request<>(new Callable<String>() {
+        Request<String> request = new FutureRequest<>(new Callable<String>() {
             @Override
             public String call() throws Exception {
                 return "";
@@ -188,7 +188,7 @@ public class RequestTest {
 
     @Test(expected = IllegalStateException.class)
     public void run_twice() {
-        Request<String> request = new Request<>(new Callable<String>() {
+        Request<String> request = new FutureRequest<>(new Callable<String>() {
             @Override
             public String call() throws Exception {
                 return "";
@@ -200,7 +200,7 @@ public class RequestTest {
 
     @Test(expected = IllegalStateException.class)
     public void runAfterCancel() {
-        Request<String> request = new Request<>(new Callable<String>() {
+        Request<String> request = new FutureRequest<>(new Callable<String>() {
             @Override
             public String call() throws Exception {
                 return "";
