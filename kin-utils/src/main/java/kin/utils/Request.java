@@ -9,14 +9,14 @@ import android.os.Looper;
  *
  * @param <T> request result type
  */
-class Request<T> {
+public class Request<T> {
 
     private final Handler mainHandler;
     private boolean cancelled;
     private boolean executed;
     private ResultCallback<T> resultCallback;
 
-    Request() {
+    public Request() {
         this.mainHandler = new Handler(Looper.getMainLooper());
     }
 
